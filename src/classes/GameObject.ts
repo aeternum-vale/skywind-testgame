@@ -1,6 +1,13 @@
 import * as PIXI from "pixi.js";
 
-export default abstract class GameObject {
+export interface IGameObjectSideAttribute {
+    Top: number;
+    Bottom: number;
+    Left: number;
+    Right: number;
+}
+
+export abstract class GameObject {
     protected _container: PIXI.Container = new PIXI.Container();
 
     get container(): PIXI.Container {
