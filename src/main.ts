@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
 import Slot from "./classes/Slot";
-
 import { IGameObjectSideAttribute } from "./classes/GameObject";
+import { IButtonTextures } from "./classes/Button";
 
 const APP_WIDTH: number = 1000;
 const APP_HEIGHT: number = 800;
@@ -60,6 +60,13 @@ function setup(): void {
         symbolsArray.push(PIXI.loader.resources[`assets/images/symbols/${(i < 10 ? "0" : "") + i}.png`].texture);
     }
 
+    const buttonTextures: IButtonTextures = {
+        normal: PIXI.loader.resources["assets/images/btn_spin_normal.png"].texture,
+        hover: PIXI.loader.resources["assets/images/btn_spin_hover.png"].texture,
+        pressed: PIXI.loader.resources["assets/images/btn_spin_pressed.png"].texture,
+        disable: PIXI.loader.resources["assets/images/btn_spin_disable.png"].texture,
+    }
+
     const slot = new Slot({
         symbolsArray,
         reelCount: 4,
@@ -71,11 +78,13 @@ function setup(): void {
         reelsHorizontalDistance: 10,
         reelsVerticalDistance: 10,
         overlay,
-        progressThreshold: .3
+        progressThreshold: .3,
+        buttonTextures,
+        buttonPosition: new PIXI.Point(800, 0)
     });
 
     gameScene.addChild(background);
-    gameScene.addChild(slot.container);
+    gameScene.addChild(slot.displayObject);
 
     app.ticker.add((delta) => slot.update(delta));
 }

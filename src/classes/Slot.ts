@@ -1,6 +1,7 @@
 import * as PIXI from "pixi.js";
 import { GameObject, IGameObjectSideAttribute } from "./GameObject";
 import Reel from "./Reel";
+import { IButtonTextures, Button } from "./Button";
 
 interface ISlotOptions {
     width: number;
@@ -15,6 +16,10 @@ interface ISlotOptions {
     reelsHorizontalDistance?: number;
     progressThreshold?: number;
     frames?: IGameObjectSideAttribute;
+    buttonTextures: IButtonTextures;
+    buttonPosition?: PIXI.Point;
+    buttonWidth?: number;
+    buttonHeight?: number;
 }
 
 enum SlotState {
@@ -25,6 +30,7 @@ enum SlotState {
 
 export default class Slot extends GameObject {
     private _reelsArray: Reel[] = [];
+    private _button: Button;
     private _state: SlotState = SlotState.Ready;
     private _progressThreshold: number;
 
@@ -41,7 +47,11 @@ export default class Slot extends GameObject {
             reelsHorizontalDistance = 0,
             position = new PIXI.Point(0, 0),
             overlay,
-            progressThreshold = .5
+            progressThreshold = .5,
+            buttonTextures,
+            buttonPosition,
+            buttonWidth,
+            buttonHeight
         } = options;
 
         this._progressThreshold = Math.max(0, Math.min(progressThreshold, 1));
@@ -83,7 +93,13 @@ export default class Slot extends GameObject {
             screen.addChild(this._reelsArray[i].displayObject);
         }
 
-        this.start();
+        this._button = new Button({
+            textures: buttonTextures,
+            position: buttonPosition,
+            width: buttonWidth,
+            height: buttonHeight
+        });
+        this._displayObject.addChild(this._button.displayObject);
     }
 
     public update(delta: number) {
