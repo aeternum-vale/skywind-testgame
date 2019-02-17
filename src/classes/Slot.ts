@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import GameObject from "./GameObject";
+import { GameObject, IGameObjectSideAttribute } from "./GameObject";
 import Reel from "./Reel";
 
 interface ISlotOptions {
@@ -14,6 +14,7 @@ interface ISlotOptions {
     reelsVerticalDistance?: number;
     reelsHorizontalDistance?: number;
     progressThreshold?: number;
+    frames?: IGameObjectSideAttribute;
 }
 
 enum SlotState {
