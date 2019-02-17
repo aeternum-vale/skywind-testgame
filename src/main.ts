@@ -1,4 +1,7 @@
 import * as PIXI from "pixi.js";
+import Slot from "./classes/Slot";
+
+import { IGameObjectSideAttribute } from "./classes/GameObject";
 
 const APP_WIDTH: number = 1000;
 const APP_HEIGHT: number = 800;
@@ -47,5 +50,32 @@ function setup(): void {
         APP_HEIGHT
     );
 
+    const overlay = new PIXI.Sprite(
+        PIXI.loader.resources["assets/images/slotOverlay.png"].texture
+    );
+
+    const symbolsArray: PIXI.Texture[] = [];
+
+    for (let i = 1; i <= SYMBOL_COUNT; i++) {
+        symbolsArray.push(PIXI.loader.resources[`assets/images/symbols/${(i < 10 ? "0" : "") + i}.png`].texture);
+    }
+
+    const slot = new Slot({
+        symbolsArray,
+        reelCount: 4,
+        frameSize: 70,
+        visibleCellCount: 4,
+        cellCount: 20,
+        width: 800,
+        position: new PIXI.Point(10, 10),
+        reelsHorizontalDistance: 10,
+        reelsVerticalDistance: 10,
+        overlay,
+        progressThreshold: .3
+    });
+
     gameScene.addChild(background);
+    gameScene.addChild(slot.container);
+
+    app.ticker.add((delta) => slot.update(delta));
 }
