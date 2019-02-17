@@ -16,8 +16,15 @@ interface ISlotOptions {
     progressThreshold?: number;
 }
 
+enum SlotState {
+    Ready,
+    Progress,
+    Finished
+}
+
 export default class Slot extends GameObject {
     private _reelsArray: Reel[] = [];
+    private _state: SlotState = SlotState.Ready;
     private _progressThreshold: number;
 
     constructor(options: ISlotOptions) {
@@ -74,5 +81,27 @@ export default class Slot extends GameObject {
             }));
             screen.addChild(this._reelsArray[i].container);
         }
+
+        this.start();
+    }
+
+    public update(delta: number) {
+        if (this._state === SlotState.Progress) {
+            this._reelsArray.forEach((reel, i, arr) => {
+                if (reel.isReady()) {
+                    if (i === 0 || arr[i - 1].progress >= this._progressThreshold) {
+                        reel.start();
+                    }
+                }
+            });
+        }
+
+        this._reelsArray.forEach((reel) => {
+            reel.update(delta);
+        });
+    }
+
+    public start() {
+        this._state = SlotState.Progress;
     }
 }
