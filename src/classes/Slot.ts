@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
+import { Button, IButtonTextures } from "./Button";
 import { GameObject, IGameObjectSideAttribute } from "./GameObject";
 import Reel from "./Reel";
-import { IButtonTextures, Button } from "./Button";
 
 interface ISlotOptions {
     width: number;

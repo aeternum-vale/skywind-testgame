@@ -64,8 +64,8 @@ function setup(): void {
         normal: PIXI.loader.resources["assets/images/btn_spin_normal.png"].texture,
         hover: PIXI.loader.resources["assets/images/btn_spin_hover.png"].texture,
         pressed: PIXI.loader.resources["assets/images/btn_spin_pressed.png"].texture,
-        disable: PIXI.loader.resources["assets/images/btn_spin_disable.png"].texture,
-    }
+        disable: PIXI.loader.resources["assets/images/btn_spin_disable.png"].texture
+    };
 
     const slot = new Slot({
         symbolsArray,
