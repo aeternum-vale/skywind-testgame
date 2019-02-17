@@ -8,10 +8,10 @@ export interface IGameObjectSideAttribute {
 }
 
 export abstract class GameObject {
-    protected _container: PIXI.Container = new PIXI.Container();
+    protected _displayObject: PIXI.Container = new PIXI.Container();
 
-    get container(): PIXI.Container {
-        return this._container;
+    get displayObject(): PIXI.Container {
+        return this._displayObject;
     }
 
     public abstract update(delta: number): void;

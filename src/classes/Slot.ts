@@ -51,14 +51,14 @@ export default class Slot extends GameObject {
         const cellHeight: number = cellWidth * symbolsArray[0].height / symbolsArray[0].width;
         const screenHeight: number = visibleCellCount * (cellHeight + reelsVerticalDistance);
 
-        this._container.position = position;
+        this._displayObject.position = position;
         overlay.width = width;
         overlay.height = screenHeight + frameSize * 2;
-        this._container.addChild(overlay);
+        this._displayObject.addChild(overlay);
 
         const screen: PIXI.Container = new PIXI.Container();
         screen.position.set(frameSize, frameSize);
-        this._container.addChild(screen);
+        this._displayObject.addChild(screen);
 
         const maskRect: PIXI.Graphics = new PIXI.Graphics();
         maskRect.beginFill(0xFF3300);
@@ -80,7 +80,7 @@ export default class Slot extends GameObject {
                 velocity: .001,
                 reelsVerticalDistance
             }));
-            screen.addChild(this._reelsArray[i].container);
+            screen.addChild(this._reelsArray[i].displayObject);
         }
 
         this.start();

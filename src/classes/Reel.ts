@@ -54,13 +54,13 @@ export default class Reel extends GameObject {
             anotherCell.height = cellHeight;
 
             anotherCell.y = reelsVerticalDistance / 2 + i * (cellHeight + reelsVerticalDistance);
-            this._container.addChild(anotherCell);
+            this._displayObject.addChild(anotherCell);
         }
 
         this._startPosition = options.position;
-        this._container.position = this._startPosition;
+        this._displayObject.position = this._startPosition;
         this._necessaryDistance = (cellHeight + reelsVerticalDistance) * (cellCount - visibleCellCount);
-        this._container.pivot.y = this._necessaryDistance;
+        this._displayObject.pivot.y = this._necessaryDistance;
 
         this._visibleCellCount = visibleCellCount;
         this._cellCount = cellCount;
@@ -70,7 +70,7 @@ export default class Reel extends GameObject {
     public update(delta: number) {
        if (this._state === ReelState.Progress) {
             this._progress += this._progressVelocity;
-            this._container.position.y = this._startPosition.y + this._necessaryDistance * this._progress;
+            this._displayObject.position.y = this._startPosition.y + this._necessaryDistance * this._progress;
             if (this._progress >= 1) {
                 this._state = ReelState.Finished;
             }
