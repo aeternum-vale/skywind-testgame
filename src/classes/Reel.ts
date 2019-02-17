@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
 import randomInt from "../lib/randomInt";
-import { GameObject } from "./GameObject";
+import { ContainerGameObject } from "./GameObject";
 
 interface IReelOptions {
     cellCount: number;
@@ -19,8 +19,9 @@ enum ReelState {
     Finished
 }
 
-export default class Reel extends GameObject {
+export default class Reel extends ContainerGameObject {
 
+    private _cells: PIXI.Sprite[] = [];
     private _state: ReelState = ReelState.Ready;
     private _progress: number = 0;
     get progress(): number {
@@ -54,13 +55,15 @@ export default class Reel extends GameObject {
             anotherCell.height = cellHeight;
 
             anotherCell.y = reelsVerticalDistance / 2 + i * (cellHeight + reelsVerticalDistance);
-            this._displayObject.addChild(anotherCell);
+
+            this._cells.push(anotherCell);
+            this._container.addChild(anotherCell);
         }
 
         this._startPosition = options.position;
-        this._displayObject.position = this._startPosition;
+        this._container.position = this._startPosition;
         this._necessaryDistance = (cellHeight + reelsVerticalDistance) * (cellCount - visibleCellCount);
-        this._displayObject.pivot.y = this._necessaryDistance;
+        this._container.pivot.y = this._necessaryDistance;
 
         this._visibleCellCount = visibleCellCount;
         this._cellCount = cellCount;
@@ -70,7 +73,7 @@ export default class Reel extends GameObject {
     public update(delta: number) {
        if (this._state === ReelState.Progress) {
             this._progress += this._progressVelocity;
-            this._displayObject.position.y = this._startPosition.y + this._necessaryDistance * this._progress;
+            this._container.position.y = this._startPosition.y + this._necessaryDistance * this._progress;
             if (this._progress >= 1) {
                 this._state = ReelState.Finished;
             }
@@ -84,4 +87,24 @@ export default class Reel extends GameObject {
     public isReady(): boolean {
         return (this._state === ReelState.Ready);
     }
+
+    public isFinished(): boolean {
+        return (this._state === ReelState.Finished);
+    }
+
+    public refresh(): void {
+        const diff: number = this._cellCount - this._visibleCellCount;
+        for (let i = this._cellCount - 1; i >= this._cellCount - this._visibleCellCount; i--) {
+            this._cells[i].texture = this._cells[i - diff].texture;
+        }
+
+        for (let i = 0; i < diff; i++) {
+            this._cells[i].texture = this._symbolsArray[randomInt(1, this._symbolsArray.length - 1)]
+        }
+
+        this._container.position = this._startPosition;
+        this._progress = 0;
+        this._state = ReelState.Ready;
+    }
+
 }
