@@ -80,7 +80,8 @@ function setup(): void {
         overlay,
         progressThreshold: .3,
         buttonTextures,
-        buttonPosition: new PIXI.Point(800, 0)
+        buttonPosition: new PIXI.Point(800, 0),
+        reelVelocity: .05
     });
 
     gameScene.addChild(background);

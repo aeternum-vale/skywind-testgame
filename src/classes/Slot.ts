@@ -20,6 +20,7 @@ interface ISlotOptions {
     buttonPosition?: PIXI.Point;
     buttonWidth?: number;
     buttonHeight?: number;
+    reelVelocity?: number;
 }
 
 enum SlotState {
@@ -50,7 +51,8 @@ export default class Slot extends ContainerGameObject {
             buttonTextures,
             buttonPosition,
             buttonWidth,
-            buttonHeight
+            buttonHeight,
+            reelVelocity = .03
         } = options;
 
         this._progressThreshold = Math.max(0, Math.min(progressThreshold, 1));
@@ -86,7 +88,7 @@ export default class Slot extends ContainerGameObject {
                         reelsHorizontalDistance / 2 + i * (cellWidth + reelsHorizontalDistance), 0
                     ),
                 visibleCellCount,
-                velocity: .001,
+                velocity: reelVelocity,
                 reelsVerticalDistance
             }));
             screen.addChild(this._reels[i].getDisplayObject());
