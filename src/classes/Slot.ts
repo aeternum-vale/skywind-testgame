@@ -85,7 +85,7 @@ export default class Slot extends ContainerGameObject {
                 position: new PIXI.Point(
                         reelsHorizontalDistance / 2 + i * (cellWidth + reelsHorizontalDistance), 0
                     ),
-                visibleCellCount: 4,
+                visibleCellCount,
                 velocity: .001,
                 reelsVerticalDistance
             }));
