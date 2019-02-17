@@ -59,11 +59,11 @@ export default class Slot extends GameObject {
         screen.position.set(frameSize, frameSize);
         this._container.addChild(screen);
 
-        const screenGlobalPosition = screen.getGlobalPosition();
         const maskRect: PIXI.Graphics = new PIXI.Graphics();
         maskRect.beginFill(0xFF3300);
-        maskRect.drawRect(screenGlobalPosition.x, screenGlobalPosition.y, screenWidth, screenHeight);
+        maskRect.drawRect(0, 0, screenWidth, screenHeight);
         maskRect.endFill();
+        screen.addChild(maskRect);
         screen.mask = maskRect;
 
         for (let i = 0; i < reelCount; i++) {
