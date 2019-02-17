@@ -84,7 +84,7 @@ function setup(): void {
     });
 
     gameScene.addChild(background);
-    gameScene.addChild(slot.displayObject);
+    gameScene.addChild(slot.getDisplayObject());
 
     app.ticker.add((delta) => slot.update(delta));
 }
