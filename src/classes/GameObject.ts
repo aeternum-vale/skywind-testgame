@@ -7,12 +7,17 @@ export interface IGameObjectSideAttribute {
     Right: number;
 }
 
-export abstract class GameObject {
-    protected _displayObject: PIXI.Container = new PIXI.Container();
+export interface IGameObject {
+    getDisplayObject(): PIXI.DisplayObject;
+    update(delta: number): void;
+}
 
-    get displayObject(): PIXI.Container {
-        return this._displayObject;
+export abstract class ContainerGameObject implements IGameObject {
+    protected _container: PIXI.Container = new PIXI.Container();
+
+    public getDisplayObject(): PIXI.Container {
+        return this._container;
     }
 
-    public abstract update(delta: number): void;
+    public update(delta: number): void {}
 }
