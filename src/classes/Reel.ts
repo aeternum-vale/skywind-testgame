@@ -73,7 +73,7 @@ export default class Reel extends ContainerGameObject {
         this._symbolsArray = symbolsArray;
 
         this._easingFunction = easingFunction;
-    } 
+    }
 
     public update(delta: number) {
        if (this._state === ReelState.Progress) {
@@ -109,7 +109,7 @@ export default class Reel extends ContainerGameObject {
         }
 
         for (let i = 0; i < diff; i++) {
-            this._cells[i].texture = this._symbolsArray[randomInt(1, this._symbolsArray.length - 1)]
+            this._cells[i].texture = this._symbolsArray[randomInt(1, this._symbolsArray.length - 1)];
         }
 
         this._container.position = this._startPosition;
