@@ -62,10 +62,10 @@ function setup(): void {
     }
 
     const buttonTextures: IButtonTextures = {
-        normal: PIXI.loader.resources["assets/images/btn_spin_normal.png"].texture,
+        disable: PIXI.loader.resources["assets/images/btn_spin_disable.png"].texture,
         hover: PIXI.loader.resources["assets/images/btn_spin_hover.png"].texture,
-        pressed: PIXI.loader.resources["assets/images/btn_spin_pressed.png"].texture,
-        disable: PIXI.loader.resources["assets/images/btn_spin_disable.png"].texture
+        normal: PIXI.loader.resources["assets/images/btn_spin_normal.png"].texture,
+        pressed: PIXI.loader.resources["assets/images/btn_spin_pressed.png"].texture
     };
 
     const reelSpinSound = new Howl({
@@ -77,30 +77,30 @@ function setup(): void {
     });
 
     const slot = new Slot({
-        symbolsArray,
-        reelCount: 5,
+        buttonHeight: 150,
+        buttonPosition: new PIXI.Point(610, 430),
+        buttonTextures,
+        buttonWidth: 150,
+        cellCount: 20,
         frames: {
-            top: 30,
             bottom: 15,
             left: 40,
             right: 40,
+            top: 30
         },
-        visibleCellCount: 4,
-        cellCount: 20,
-        width: 650,
+        landingSound,
+        overlay,
         position: new PIXI.Point(30, 0),
+        progressThreshold: .1,
+        reelCount: 5,
+        reelEasingFunction: cubicBezier(.54, 1.21, 1, 1.001),
+        reelSpinSound,
+        reelVelocity: .16,
         reelsHorizontalDistance: 10,
         reelsVerticalDistance: 10,
-        overlay,
-        progressThreshold: .1,
-        buttonTextures,
-        reelVelocity: .16,
-        reelEasingFunction: cubicBezier(.54, 1.21, 1, 1.001),
-        buttonPosition: new PIXI.Point(610, 430),
-        buttonWidth: 150,
-        buttonHeight: 150,
-        reelSpinSound,
-        landingSound
+        symbolsArray,
+        visibleCellCount: 4,
+        width: 650
     });
 
     gameScene.addChild(background);

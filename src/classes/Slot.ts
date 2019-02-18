@@ -47,10 +47,10 @@ export default class Slot extends ContainerGameObject {
             visibleCellCount,
             width,
             frames = {
-                top: 0,
                 bottom: 0,
                 left: 0,
-                right: 0
+                right: 0,
+                top: 0
             },
             symbolsArray,
             reelsVerticalDistance = 0,
@@ -97,30 +97,28 @@ export default class Slot extends ContainerGameObject {
         for (let i = 0; i < reelCount; i++) {
             this._reels.push(new Reel({
                 cellCount,
-                symbolsArray,
-                cellWidth,
                 cellHeight,
-                position: new PIXI.Point(
-                        reelsHorizontalDistance / 2 + i * (cellWidth + reelsHorizontalDistance), 0
-                    ),
-                visibleCellCount,
-                velocity: reelVelocity,
+                cellWidth,
+                easingFunction: reelEasingFunction,
+                position: new PIXI.Point(reelsHorizontalDistance / 2 + i * (cellWidth + reelsHorizontalDistance), 0),
                 reelsVerticalDistance,
-                easingFunction: reelEasingFunction
+                symbolsArray,
+                velocity: reelVelocity,
+                visibleCellCount
             }));
             screen.addChild(this._reels[i].getDisplayObject());
         }
 
         this._button = new Button({
-            textures: buttonTextures,
-            position: buttonPosition,
-            width: buttonWidth,
             height: buttonHeight,
             onClickCallback: () => {
                 this.start();
                 this._reelSpinSound.stop();
                 this._reelSpinSound.play();
-            }
+            },
+            position: buttonPosition,
+            textures: buttonTextures,
+            width: buttonWidth
         });
 
         this._container.addChild(this._button.getDisplayObject());

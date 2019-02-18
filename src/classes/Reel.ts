@@ -31,8 +31,6 @@ export default class Reel extends ContainerGameObject {
 
     private _progressVelocity: number = .01;
     private _visibleCellCount: number;
-    private _cellWidth: number;
-    private _cellHeight: number;
     private _cellCount: number;
     private _symbolsArray: PIXI.Texture[];
     private _necessaryDistance: number;
