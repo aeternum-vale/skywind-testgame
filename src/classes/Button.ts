@@ -50,6 +50,7 @@ export class Button implements IGameObject {
         this._buttonSprite.interactive = true;
         this._buttonSprite.mouseover  = this._onMouseOver.bind(this);
         this._buttonSprite.mouseout  = this._onMouseOut.bind(this);
+        this._buttonSprite.mousedown = this._onMouseDown.bind(this);
         this._buttonSprite.click  = this._onClick.bind(this);
     }
 
@@ -73,6 +74,12 @@ export class Button implements IGameObject {
     private _onMouseOut(e: PIXI.interaction.InteractionEvent): void {
         if (this._state === ButtonState.Normal) {
             this._buttonSprite.texture = this._textures.normal;
+        }
+    }
+
+    private _onMouseDown(e: PIXI.interaction.InteractionEvent): void {
+        if (this._state === ButtonState.Normal) {
+            this._buttonSprite.texture = this._textures.pressed;
         }
     }
 

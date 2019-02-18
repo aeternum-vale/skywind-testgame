@@ -1,10 +1,10 @@
 import * as PIXI from "pixi.js";
 
 export interface IGameObjectSideAttribute {
-    Top: number;
-    Bottom: number;
-    Left: number;
-    Right: number;
+    top: number;
+    bottom: number;
+    left: number;
+    right: number;
 }
 
 export interface IGameObject {

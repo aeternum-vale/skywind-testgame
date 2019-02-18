@@ -71,7 +71,12 @@ function setup(): void {
     const slot = new Slot({
         symbolsArray,
         reelCount: 5,
-        frameSize: 70,
+        frames: {
+            top: 35,
+            bottom: 30,
+            left: 40,
+            right: 40,
+        },
         visibleCellCount: 4,
         cellCount: 20,
         width: 800,
@@ -82,8 +87,8 @@ function setup(): void {
         progressThreshold: .1,
         buttonTextures,
         buttonPosition: new PIXI.Point(800, 0),
-        reelVelocity: .11,
-        reelEasingFunction: cubicBezier(.54, 1.21, 1, 1.005)
+        reelVelocity: .16,
+        reelEasingFunction: cubicBezier(.54, 1.21, 1, 1.001)
     });
 
     gameScene.addChild(background);

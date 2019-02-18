@@ -5,7 +5,6 @@ import Reel from "./Reel";
 
 interface ISlotOptions {
     width: number;
-    frameSize?: number;
     visibleCellCount: number;
     position?: PIXI.Point;
     overlay: PIXI.Sprite;
@@ -42,7 +41,12 @@ export default class Slot extends ContainerGameObject {
             cellCount,
             visibleCellCount,
             width,
-            frameSize = 0,
+            frames = {
+                top: 0,
+                bottom: 0,
+                left: 0,
+                right: 0
+            },
             symbolsArray,
             reelsVerticalDistance = 0,
             reelsHorizontalDistance = 0,
@@ -59,18 +63,18 @@ export default class Slot extends ContainerGameObject {
 
         this._progressThreshold = Math.max(0, Math.min(progressThreshold, 1));
 
-        const screenWidth: number = width - 2 * frameSize;
+        const screenWidth: number = width - (frames.left + frames.right);
         const cellWidth: number = screenWidth / reelCount - reelsHorizontalDistance;
         const cellHeight: number = cellWidth * symbolsArray[0].height / symbolsArray[0].width;
         const screenHeight: number = visibleCellCount * (cellHeight + reelsVerticalDistance);
 
         this._container.position = position;
         overlay.width = width;
-        overlay.height = screenHeight + frameSize * 2;
+        overlay.height = screenHeight + (frames.top + frames.bottom);
         this._container.addChild(overlay);
 
         const screen: PIXI.Container = new PIXI.Container();
-        screen.position.set(frameSize, frameSize);
+        screen.position.set(frames.top, frames.left);
         this._container.addChild(screen);
 
         const maskRect: PIXI.Graphics = new PIXI.Graphics();
