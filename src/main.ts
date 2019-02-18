@@ -1,8 +1,8 @@
+import * as cubicBezier from "bezier-easing";
+import { Howl } from "howler";
 import * as PIXI from "pixi.js";
-import * as cubicBezier from "../node_modules/bezier-easing/src/index";
-import Slot from "./classes/Slot";
-import { IGameObjectSideAttribute } from "./classes/GameObject";
 import { IButtonTextures } from "./classes/Button";
+import Slot from "./classes/Slot";
 
 const APP_WIDTH: number = 800;
 const APP_HEIGHT: number = 600;
@@ -68,12 +68,20 @@ function setup(): void {
         disable: PIXI.loader.resources["assets/images/btn_spin_disable.png"].texture
     };
 
+    const reelSpinSound = new Howl({
+        src: ["assets/sounds/Reel_Spin.mp3"]
+    });
+
+    const landingSound = new Howl({
+        src: ["assets/sounds/Landing_1.mp3"]
+    });
+
     const slot = new Slot({
         symbolsArray,
         reelCount: 5,
         frames: {
             top: 30,
-            bottom: 25,
+            bottom: 15,
             left: 40,
             right: 40,
         },
@@ -90,7 +98,9 @@ function setup(): void {
         reelEasingFunction: cubicBezier(.54, 1.21, 1, 1.001),
         buttonPosition: new PIXI.Point(610, 430),
         buttonWidth: 150,
-        buttonHeight: 150
+        buttonHeight: 150,
+        reelSpinSound,
+        landingSound
     });
 
     gameScene.addChild(background);

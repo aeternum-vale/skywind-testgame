@@ -1,9 +1,12 @@
+import { Howl } from "howler";
 import * as PIXI from "pixi.js";
 import { Button, IButtonTextures } from "./Button";
 import { ContainerGameObject, IGameObjectSideAttribute } from "./GameObject";
 import Reel from "./Reel";
 
 interface ISlotOptions {
+    reelSpinSound?: Howl;
+    landingSound?: Howl;
     width: number;
     visibleCellCount: number;
     position?: PIXI.Point;
@@ -33,6 +36,8 @@ export default class Slot extends ContainerGameObject {
     private _button: Button;
     private _state: SlotState = SlotState.Ready;
     private _progressThreshold: number;
+    private _landingSound: Howl;
+    private _reelSpinSound: Howl;
 
     constructor(options: ISlotOptions) {
         super();
@@ -58,8 +63,13 @@ export default class Slot extends ContainerGameObject {
             buttonWidth,
             buttonHeight,
             reelVelocity = .03,
-            reelEasingFunction
+            reelEasingFunction,
+            reelSpinSound,
+            landingSound
         } = options;
+
+        this._landingSound = landingSound;
+        this._reelSpinSound = reelSpinSound;
 
         this._progressThreshold = Math.max(0, Math.min(progressThreshold, 1));
 
@@ -106,7 +116,11 @@ export default class Slot extends ContainerGameObject {
             position: buttonPosition,
             width: buttonWidth,
             height: buttonHeight,
-            onClickCallback: () => this.start()
+            onClickCallback: () => {
+                this.start();
+                this._reelSpinSound.stop();
+                this._reelSpinSound.play();
+            }
         });
 
         this._container.addChild(this._button.getDisplayObject());
@@ -125,6 +139,9 @@ export default class Slot extends ContainerGameObject {
                     this._state = SlotState.Ready;
                     this._refreshReels();
                     this._button.activate();
+
+                    this._reelSpinSound.stop();
+                    this._landingSound.play();
                 }
             });
         }
