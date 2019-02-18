@@ -10,7 +10,7 @@
   "author": "Dedyulya Artur",
   "license": "ISC",
   "dependencies": {
-    "bezier-easing": "^2.1.0",
+    "@types/bezier-easing": "^2.0.0",
     "pixi.js": "^4.8.5"
   },
   "devDependencies": {
