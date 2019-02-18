@@ -74,7 +74,7 @@ export default class Slot extends ContainerGameObject {
         this._container.addChild(overlay);
 
         const screen: PIXI.Container = new PIXI.Container();
-        screen.position.set(frames.top, frames.left);
+        screen.position.set(frames.left, frames.top);
         this._container.addChild(screen);
 
         const maskRect: PIXI.Graphics = new PIXI.Graphics();
