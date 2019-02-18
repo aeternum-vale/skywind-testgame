@@ -21,6 +21,7 @@ interface ISlotOptions {
     buttonWidth?: number;
     buttonHeight?: number;
     reelVelocity?: number;
+    reelEasingFunction?: (timeFraction: number) => number;
 }
 
 enum SlotState {
@@ -52,7 +53,8 @@ export default class Slot extends ContainerGameObject {
             buttonPosition,
             buttonWidth,
             buttonHeight,
-            reelVelocity = .03
+            reelVelocity = .03,
+            reelEasingFunction
         } = options;
 
         this._progressThreshold = Math.max(0, Math.min(progressThreshold, 1));
@@ -89,7 +91,8 @@ export default class Slot extends ContainerGameObject {
                     ),
                 visibleCellCount,
                 velocity: reelVelocity,
-                reelsVerticalDistance
+                reelsVerticalDistance,
+                easingFunction: reelEasingFunction
             }));
             screen.addChild(this._reels[i].getDisplayObject());
         }

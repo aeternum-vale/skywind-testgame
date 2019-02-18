@@ -11,6 +11,7 @@ interface IReelOptions {
     position: PIXI.Point;
     velocity?: number;
     reelsVerticalDistance?: number;
+    easingFunction?: (timeFraction: number) => number;
 }
 
 enum ReelState {
@@ -36,6 +37,7 @@ export default class Reel extends ContainerGameObject {
     private _symbolsArray: PIXI.Texture[];
     private _necessaryDistance: number;
     private _startPosition: PIXI.Point;
+    private _easingFunction: (timeFraction: number) => number;
 
     constructor(options: IReelOptions) {
         super();
@@ -45,7 +47,8 @@ export default class Reel extends ContainerGameObject {
             cellCount,
             visibleCellCount,
             symbolsArray,
-            reelsVerticalDistance
+            reelsVerticalDistance,
+            easingFunction = (timeFraction: number) => timeFraction
         } = options;
 
         for (let i = 0; i < cellCount; i++) {
@@ -68,13 +71,20 @@ export default class Reel extends ContainerGameObject {
         this._visibleCellCount = visibleCellCount;
         this._cellCount = cellCount;
         this._symbolsArray = symbolsArray;
-    }
+
+        this._easingFunction = easingFunction;
+    } 
 
     public update(delta: number) {
        if (this._state === ReelState.Progress) {
             this._progress += this._progressVelocity;
-            this._container.position.y = this._startPosition.y + this._necessaryDistance * this._progress;
-            if (this._progress >= 1) {
+
+            if (this._progress < 1) {
+                this._container.position.y = this._startPosition.y +
+                    this._necessaryDistance * this._easingFunction(this._progress);
+            } else {
+                this._container.position.y = this._startPosition.y + this._necessaryDistance;
+
                 this._state = ReelState.Finished;
             }
        }
@@ -106,5 +116,4 @@ export default class Reel extends ContainerGameObject {
         this._progress = 0;
         this._state = ReelState.Ready;
     }
-
 }
