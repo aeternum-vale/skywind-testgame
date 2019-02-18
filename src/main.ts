@@ -4,8 +4,8 @@ import Slot from "./classes/Slot";
 import { IGameObjectSideAttribute } from "./classes/GameObject";
 import { IButtonTextures } from "./classes/Button";
 
-const APP_WIDTH: number = 1000;
-const APP_HEIGHT: number = 800;
+const APP_WIDTH: number = 800;
+const APP_HEIGHT: number = 600;
 const SYMBOL_COUNT: number = 13;
 
 const app: PIXI.Application = new PIXI.Application({
@@ -72,23 +72,25 @@ function setup(): void {
         symbolsArray,
         reelCount: 5,
         frames: {
-            top: 35,
-            bottom: 30,
+            top: 30,
+            bottom: 25,
             left: 40,
             right: 40,
         },
         visibleCellCount: 4,
         cellCount: 20,
-        width: 800,
-        position: new PIXI.Point(10, 10),
+        width: 650,
+        position: new PIXI.Point(30, 0),
         reelsHorizontalDistance: 10,
         reelsVerticalDistance: 10,
         overlay,
         progressThreshold: .1,
         buttonTextures,
-        buttonPosition: new PIXI.Point(800, 0),
         reelVelocity: .16,
-        reelEasingFunction: cubicBezier(.54, 1.21, 1, 1.001)
+        reelEasingFunction: cubicBezier(.54, 1.21, 1, 1.001),
+        buttonPosition: new PIXI.Point(610, 430),
+        buttonWidth: 150,
+        buttonHeight: 150
     });
 
     gameScene.addChild(background);
