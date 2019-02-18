@@ -1,4 +1,5 @@
 import * as PIXI from "pixi.js";
+import * as cubicBezier from "../node_modules/bezier-easing/src/index";
 import Slot from "./classes/Slot";
 import { IGameObjectSideAttribute } from "./classes/GameObject";
 import { IButtonTextures } from "./classes/Button";
@@ -69,7 +70,7 @@ function setup(): void {
 
     const slot = new Slot({
         symbolsArray,
-        reelCount: 4,
+        reelCount: 5,
         frameSize: 70,
         visibleCellCount: 4,
         cellCount: 20,
@@ -78,10 +79,11 @@ function setup(): void {
         reelsHorizontalDistance: 10,
         reelsVerticalDistance: 10,
         overlay,
-        progressThreshold: .3,
+        progressThreshold: .1,
         buttonTextures,
         buttonPosition: new PIXI.Point(800, 0),
-        reelVelocity: .05
+        reelVelocity: .11,
+        reelEasingFunction: cubicBezier(.54, 1.21, 1, 1.005)
     });
 
     gameScene.addChild(background);
