@@ -75,8 +75,7 @@ export default class Reel extends ContainerGameObject {
 
     public update(delta: number) {
        if (this._state === ReelState.Progress) {
-            this._progress += this._progressVelocity;
-
+            this._progress += this._progressVelocity * delta;
             if (this._progress < 1) {
                 this._container.position.y = this._startPosition.y +
                     this._necessaryDistance * this._easingFunction(this._progress);
