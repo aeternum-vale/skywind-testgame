@@ -4,7 +4,7 @@ module.exports = {
   entry: "./src/main.ts",
 
   output: {
-    path: path.resolve(__dirname, "docs"),
+    path: path.resolve(__dirname, "game"),
     filename: "bundle.js"
   },
 
